@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "375348138484",
+    "project_id": "evaluacion-3-iot-ce100",
+    "storage_bucket": "evaluacion-3-iot-ce100.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:375348138484:android:df8616736566443a5569a1",
+        "android_client_info": {
+          "package_name": "com.example.prueba_iot"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDLUYnyKzDkOB-3Kp_OH77OKLj0UHrE2M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
