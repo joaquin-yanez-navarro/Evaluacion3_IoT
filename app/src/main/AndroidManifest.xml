@@ -18,9 +18,6 @@
             android:name=".Home"
             android:exported="false" />
         <activity
-            android:name=".Noticia"
-            android:exported="false" />
-        <activity
             android:name=".IniciarSesion"
             android:exported="false" />
         <activity
