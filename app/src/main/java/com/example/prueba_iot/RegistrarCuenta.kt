@@ -13,7 +13,6 @@ class RegistrarCuenta : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registrar_cuenta)
@@ -25,6 +24,10 @@ class RegistrarCuenta : AppCompatActivity() {
         val btnCrearCuenta = findViewById<Button>(R.id.btn_register)
         val btnVolverLogin = findViewById<Button>(R.id.btn_volver_login)
 
+        btnVolverLogin.setOnClickListener {
+            finish()
+        }
+
         btnCrearCuenta.setOnClickListener {
             val email = etEmail.text.toString().trim()
             val password = etPassword.text.toString().trim()
@@ -32,10 +35,6 @@ class RegistrarCuenta : AppCompatActivity() {
             if (email.isEmpty() || password.isEmpty()) {
                 Toast.makeText(this, "Completa todos los campos.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
-            }
-
-            btnVolverLogin.setOnClickListener {
-                finish()
             }
 
             auth.createUserWithEmailAndPassword(email, password)

@@ -23,6 +23,10 @@ class RecuperarContrasena : AppCompatActivity() {
         val btnRecuperar = findViewById<Button>(R.id.btn_recover)
         val btnVolverLogin = findViewById<Button>(R.id.btn_volver_login_recover)
 
+        btnVolverLogin.setOnClickListener {
+            finish()
+        }
+
         btnRecuperar.setOnClickListener {
             val email = etEmail.text.toString().trim()
 
@@ -31,39 +35,25 @@ class RecuperarContrasena : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            btnVolverLogin.setOnClickListener {
-                finish()
-            }
-
-            auth.signInWithEmailAndPassword(email, "password_ficticia_solo_para_validar")
-                .addOnFailureListener { exception ->
-
-                    auth.fetchSignInMethodsForEmail(email)
-                        .addOnCompleteListener { fetchTask ->
-                            if (fetchTask.isSuccessful && fetchTask.result?.signInMethods?.isNotEmpty() == true) {
-
-                            } else {
-                                mostrarDialogoError("Usuario no encontrado", "El correo electrónico no está registrado en el sistema.")
-                            }
-                        }
+            auth.sendPasswordResetEmail(email)
+                .addOnCompleteListener(this) { task ->
+                    if (task.isSuccessful) {
+                        mostrarDialogoExito("Correo Enviado",
+                            "Se ha enviado un correo electrónico de recuperación a $email. Sigue las instrucciones para restablecer tu contraseña.")
+                    } else {
+                        val errorMessage = task.exception?.message ?: "Error desconocido al enviar el correo."
+                        mostrarDialogoError("Fallo al Enviar Correo", errorMessage)
+                    }
                 }
         }
     }
 
-    private fun generarNuevaContrasena(): String {
-        val charPool : List<Char> = ('a'..'z') + ('A'..'Z') + ('0'..'9')
-        return (1..8).map { Random.nextInt(0, charPool.size) }
-            .map(charPool::get)
-            .joinToString("")
-    }
-
-    private fun mostrarNuevaClave(password: String) {
+    private fun mostrarDialogoExito(title: String, message: String) {
         AlertDialog.Builder(this)
-            .setTitle("Clave Recuperada (EV3)")
-            .setMessage("Se ha verificado tu cuenta. Tu nueva contraseña temporal es: \n\n**$password**\n\nDebes usarla para iniciar sesión.")
+            .setTitle(title)
+            .setMessage(message)
             .setPositiveButton("Aceptar") { dialog, _ ->
                 dialog.dismiss()
-
                 startActivity(Intent(this, IniciarSesion::class.java))
                 finish()
             }
@@ -79,4 +69,5 @@ class RecuperarContrasena : AppCompatActivity() {
             }
             .show()
     }
+
 }

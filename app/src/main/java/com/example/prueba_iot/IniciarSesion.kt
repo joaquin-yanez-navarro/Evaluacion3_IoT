@@ -37,6 +37,7 @@ class IniciarSesion : AppCompatActivity() {
                 auth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
+                            // Asumiendo que 'Home' es la actividad principal después del login
                             startActivity(Intent(this, Home::class.java))
                             finish()
                         } else {
@@ -56,5 +57,12 @@ class IniciarSesion : AppCompatActivity() {
             }
         }
 
+        btnForgotPassword.setOnClickListener {
+            startActivity(Intent(this, RecuperarContrasena::class.java))
+        }
+
+        btnRegister.setOnClickListener {
+            startActivity(Intent(this, RegistrarCuenta::class.java))
+        }
     }
 }
